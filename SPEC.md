@@ -138,14 +138,14 @@ A verifier or receipt page MUST classify every displayed field by provenance. It
 | `payload.rule_id` | bot-signed + runtime self-report | Signed policy rule label; not proof of external policy registry. |
 | `payload.decision` | bot-signed + runtime self-report | Signed opaque runtime string in v0.1; do not infer enforcement. |
 | `payload.reason_code` | bot-signed + runtime self-report | Signed opaque runtime string in v0.1. |
-| `payload.enforcement_mode` | bot-signed + runtime self-report | Signed opaque runtime string in v0.1; enforcement not proven without linked evidence. |
+| `payload.enforcement_mode` | bot-signed + runtime self-report | Signed opaque runtime string in v0.1; v0.1 infers no enforcement from it. |
 | `payload.policy_version` | bot-signed + runtime self-report | Signed policy version label; external policy contents not proven. |
 | `payload.inputs_commitment` | bot-signed commitment only | Commitment only; not independently openable. |
 | `payload.method` | bot-signed + runtime self-report | Signed wrapper-observed method name; not proof of Telegram delivery. |
 | `payload.args_commitment` | bot-signed commitment only | Commitment to sanitized args; not exact wire bytes. |
 | `payload.sanitizer_id` | bot-signed + runtime self-report | Signed sanitizer identifier; sanitizer semantics are draft/deferred. |
 | `payload.sanitizer_version` | bot-signed + runtime self-report | Signed sanitizer version label; sanitizer semantics are draft/deferred. |
-| `payload.policy_decision` | bot-signed + runtime self-report | Optional signed opaque string when a PDR link exists. |
+| `payload.policy_decision` | bot-signed + runtime self-report | Optional signed opaque runtime string in v0.1; v0.1 defines no PDR-to-OAR linkage. |
 | `payload.outcome` | bot-signed + runtime self-report | Signed opaque runtime string in v0.1; not Telegram delivery. |
 | `payload.retry_involved` | bot-signed + runtime self-report | Signed boolean assertion; independent retry audit not proven. |
 | `payload.previous_receipt_hash` | bot-signed + self-reported linkage | Optional linkage field; not continuity/completeness proof. |
@@ -305,7 +305,7 @@ A valid v0.1 `botlok:pdr` payload MUST contain the common fields in Section 8 an
 | `policy_version` | yes | Runtime-reported policy version label. |
 | `inputs_commitment` | yes | Commitment to policy inputs. |
 
-A blocked or suppressed decision MUST NOT be shown as enforced unless linked evidence shows Botlok, the application, or another actor actually prevented the downstream action. Full action taxonomy and linkage rules are deferred to M1a.
+A blocked or suppressed decision MUST NOT be shown as enforced. A PDR records what policy decided; v0.1 provides no mechanism by which a verifier could confirm that any downstream action was actually prevented or performed. Full action taxonomy and PDR-to-OAR linkage rules are deferred to M1a.
 
 ### 9.3 `botlok:oar`
 
@@ -319,9 +319,9 @@ A valid v0.1 `botlok:oar` payload MUST contain the common fields in Section 8 an
 | `sanitizer_version` | yes | Runtime-reported sanitizer version string. |
 | `outcome` | yes | Signed opaque runtime string in v0.1. |
 | `retry_involved` | yes | Boolean runtime assertion. |
-| `policy_decision` | no | Optional; MUST be omitted when no PDR link exists. |
+| `policy_decision` | no | Optional signed opaque runtime string in v0.1. v0.1 defines no PDR-to-OAR linkage, so no link precondition governs its presence; PDR-to-OAR linkage is deferred to M1a. |
 
-OAR proves the Botlok-wrapped runtime constructed or observed a logical outbound action according to the wrapper and sanitizer. It does not prove exact serialized HTTP wire bytes, Telegram delivery, or that the user saw the message.
+An OAR is a signed runtime assertion that the Botlok-wrapped runtime reported constructing or observing a logical outbound action according to the wrapper and sanitizer. It does not prove exact serialized HTTP wire bytes, Telegram delivery, or that the user saw the message.
 
 Full sanitizer profile and full action-phase/outcome taxonomy are deferred to M1a.
 
@@ -329,7 +329,7 @@ Full sanitizer profile and full action-phase/outcome taxonomy are deferred to M1
 
 `receipt_id` is an internal implementation identifier. It is not a security secret and it is not an access token.
 
-A full receipt artifact includes the signed payload, `receipt_id`, `receipt_hash`, signatures, and ledger attestation. A public receipt page may display a projection of the receipt, but if it claims public verification it MUST provide a verifier path to the full artifact or enough data to verify the full artifact.
+A full receipt artifact includes the signed payload (including `payload.receipt_id`), `receipt_hash`, signatures, and optional ledger attestation. A public receipt page may display a projection of the receipt, but if it claims public verification it MUST provide a verifier path to the full artifact or enough data to verify the full artifact.
 
 Public links MUST NOT use deterministic `receipt_id` as the public access key. Public sharing requires a separate `public_share_token` in M1a. Public share token implementation is not part of v0.1 candidate wire compatibility.
 
@@ -369,6 +369,8 @@ commitment = b64url_no_pad(HMAC-SHA256(idKey, "<kind>:<value>"))
 
 These commitments hide low-entropy IDs from public enumeration and support equality correlation under the same commitment key. They are not public openings. An external verifier cannot independently confirm the committed Telegram ID without additional disclosure material controlled by the operator.
 
+In v0.1, all commitment fields (update_commitment, inputs_commitment, args_commitment, and optional chat_commitment, user_commitment) are opaque signed strings. A strict v0.1 verifier validates only presence, JSON type, and signed integrity — not commitment algorithms or openings. The HMAC construction above describes how M0 produces commitments and is not a v0.1 verifier requirement.
+
 Known limitation: because `idKey` is derived from the bot signing seed in M0, signing-key rotation changes the commitment key and breaks correlation across rotation.
 
 Roadmap: use a separate or versioned commitment key, `commitment_key_id`, and optional selective disclosure.
@@ -387,7 +389,7 @@ Open Issue: define a later-profile content commitment and selective-disclosure m
 
 The v0.1 action and decision fields listed in Section 9 are signed opaque runtime strings unless otherwise specified. A verifier MUST NOT infer Telegram delivery, enforcement, safety, or real-world occurrence from them.
 
-A PDR `decision` is a signed policy record, not proof of enforcement unless linked evidence shows Botlok or another actor actually prevented or performed the downstream action.
+A PDR `decision` is a signed policy record. It is not proof of enforcement, and v0.1 defines no linkage by which enforcement could be shown, so a verifier MUST NOT infer that any downstream action was prevented or performed.
 
 An OAR `outcome` is a signed wrapper observation. If an OAR uses an outcome value that means the result is unknown or unconfirmed, a public page MUST display `action outcome unconfirmed` and MUST NOT present the action as successfully verified.
 

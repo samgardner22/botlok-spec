@@ -17,9 +17,9 @@ These vectors accompany the Botlok Receipt Schema v0.1 Candidate - v1.3.6.
 
 | File | Expected result |
 |---|---|
-| `valid_iur.json` | crypto checks pass for a valid IUR vector. |
-| `valid_pdr.json` | crypto checks pass for a valid PDR vector. |
-| `valid_oar.json` | crypto checks pass for a valid OAR vector. |
+| `valid_iur.json` | crypto checks pass for a positive target-profile IUR vector. |
+| `valid_pdr.json` | crypto checks pass for a positive target-profile PDR vector. |
+| `valid_oar.json` | crypto checks pass for a positive target-profile OAR vector. |
 | `tampered_payload_hash_mismatch.json` | overall INVALID because displayed payload does not match signed `receipt_hash`. |
 | `invalid_bot_signature.json` | payload hash pass, bot signature fail, ledger signature for receipt hash pass. |
 | `missing_trusted_key.json` | payload and envelope key IDs match, but trusted bot key is missing. |
