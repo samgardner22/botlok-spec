@@ -19,7 +19,7 @@ Botlok v0.1 is Botlok-native and ACTA-inspired. It is not strict ACTA-wire-compa
 
 This document defines the Botlok v0.1-candidate public wire profile. It should not be read as a byte-for-byte description of the frozen M0 de-risk implementation.
 
-The frozen M0 reference implementation at commit `8d6b77a` validates the core cryptographic and architectural model: canonical payload hashing, domain-separated Ed25519 signing, HMAC identifier commitments, durable local queueing, publish-later behavior, verify-before-attest ledger flow, and the proof-boundary model.
+The frozen M0 reference implementation at commit `8d6b77a` implements and exercises the core cryptographic and architectural model: canonical payload hashing, domain-separated Ed25519 signing, HMAC identifier commitments, durable local queueing, publish-later behavior, verify-before-attest ledger flow, and the proof-boundary model.
 
 M0 does not yet emit this exact public wire profile. Known differences include:
 
@@ -31,6 +31,7 @@ M0 does not yet emit this exact public wire profile. Known differences include:
 - M0 uses `inputs_hash`, `args_hash`, and `content_hash`; this public profile uses commitment language and forbids public `content_commitment` / deterministic content hashes in v0.1.
 - M0 OAR payloads may include a nested `flags` object and numeric `error_code`; this public profile restricts payload values to strings and booleans.
 - M0 ledger verification does not yet enforce `payload.key_id == bot_sig.key_id`; this public candidate verifier does.
+- M0 constrains `decision`, `outcome`, and `policy_decision` to closed code enums; this public profile treats them as opaque signed strings (a superset, not a conflict).
 
 Aligning the reference implementation to this public wire profile is M1a work. The spec should be treated as the target public format, not as a dump of current M0 internal receipts.
 
@@ -248,6 +249,8 @@ Public-key fingerprint formula:
 ```text
 public_key_fingerprint = b64url_no_pad(SHA-256(raw_32_byte_public_key))
 ```
+
+The fingerprint is a verifier-derived display value. It is not carried in the receipt and is not exercised by the v0.1 test vectors.
 
 ## 8. Common payload fields
 
