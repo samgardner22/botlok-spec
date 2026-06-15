@@ -1,0 +1,30 @@
+{
+  "payload": {
+    "schema_version": "0.1-candidate",
+    "profile": "botlok-wire-v0.1-candidate",
+    "environment": "staging",
+    "bot_id": "bot-demo-descriptive-label",
+    "key_id": "demo-bot-key-1",
+    "receipt_id": "iur-demo-001",
+    "type": "botlok:iur",
+    "event_ts": "2026-06-13T19:50:00.000Z",
+    "update_type": "edited_message",
+    "source_mode": "fixture_raw",
+    "update_commitment": "u_7nK4_demo_update_commitment",
+    "raw_message_stored": false,
+    "chat_commitment": "c_chat_demo_commitment",
+    "user_commitment": "u_user_demo_commitment"
+  },
+  "receipt_hash": "6rjYSqYO7xc2Ev2jXV60epI6M6w_DzKRkUj1CfLi6_0",
+  "bot_sig": {
+    "alg": "Ed25519",
+    "key_id": "demo-bot-key-1",
+    "sig": "uSceZTUDmvAUzWOUf8ZOrP75DMrMr0w9_2WKxBbNxOUbsD3lr9hKnXFR6yFPzE28E1rTtI3ZmwvlYlAFJCp1DA"
+  },
+  "ledger": {
+    "alg": "Ed25519",
+    "key_id": "demo-ledger-key-1",
+    "ingest_ts": "2026-06-13T20:00:00.000Z",
+    "sig": "W6kmPJWf02CC8ch42BfhBdK2x0okkaSj7_iGy-BVqSaW5v-uoOTVWVAN2XUq7011MOZUvUjB5PCtUw4J2lqXAg"
+  }
+}

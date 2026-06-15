@@ -1,0 +1,31 @@
+{
+  "payload": {
+    "schema_version": "0.1-candidate",
+    "profile": "botlok-wire-v0.1-candidate",
+    "environment": "staging",
+    "bot_id": "bot-demo-descriptive-label",
+    "key_id": "demo-bot-key-1",
+    "receipt_id": "oar-demo-001",
+    "type": "botlok:oar",
+    "event_ts": "2026-06-13T19:50:02.000Z",
+    "method": "sendMessage",
+    "args_commitment": "a_args_demo_commitment",
+    "sanitizer_id": "botlok-telegram-oar-sanitizer-draft",
+    "sanitizer_version": "0.1-draft",
+    "outcome": "attempted",
+    "retry_involved": false,
+    "policy_decision": "suppress"
+  },
+  "receipt_hash": "BwWfO5fOl4j-CuQPq11INaY39ls6vn_f_FYvpGP8jjo",
+  "bot_sig": {
+    "alg": "Ed25519",
+    "key_id": "demo-bot-key-1",
+    "sig": "jmFHOia-q94DWExcRoY6QrDPaoSY2bZd5sTt7VIraBPb1iWER33xHec7mK02AbVEkSzoZBHIOMV1GGre5aMfCA"
+  },
+  "ledger": {
+    "alg": "Ed25519",
+    "key_id": "demo-ledger-key-1",
+    "ingest_ts": "2026-06-13T20:00:00.000Z",
+    "sig": "-do1YsL_UT9q9D-STB8gY84y89kc8rSgFgq7cFdxD2UY5oTYH7V-ONQkzm4cQmSINtoqblzE_fOCKYzWXoVDCw"
+  }
+}

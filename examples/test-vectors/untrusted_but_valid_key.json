@@ -1,0 +1,30 @@
+{
+  "payload": {
+    "schema_version": "0.1-candidate",
+    "profile": "botlok-wire-v0.1-candidate",
+    "environment": "staging",
+    "bot_id": "bot-demo-descriptive-label",
+    "key_id": "untrusted-demo-key",
+    "receipt_id": "pdr-untrusted-key-001",
+    "type": "botlok:pdr",
+    "event_ts": "2026-06-13T19:50:01.000Z",
+    "rule_id": "bot_loop_guard",
+    "decision": "suppress",
+    "reason_code": "duplicate_or_loop_risk",
+    "enforcement_mode": "observe_only",
+    "policy_version": "policy-demo-v1",
+    "inputs_commitment": "i_inputs_demo_commitment"
+  },
+  "receipt_hash": "0V5T6vKD_y61m5ltwXbkMWBmBgcMuxWgcoeXUMm3Tpo",
+  "bot_sig": {
+    "alg": "Ed25519",
+    "key_id": "untrusted-demo-key",
+    "sig": "775Z8mcU7Nxfe2WwriuV7Rixe33yCceFJ58CTORFNR9gu0f0zgn7CmHOIYwDVphzjtfOeAuJu_B73BeBDLa0BQ"
+  },
+  "ledger": {
+    "alg": "Ed25519",
+    "key_id": "demo-ledger-key-1",
+    "ingest_ts": "2026-06-13T20:00:00.000Z",
+    "sig": "4LH-q-p6X0bh3JICsst4ngfk4jqHGJbxfzHpRywLrlmxi6_gUC5h_S7D447uKnS92k4L7Ny2Qiv_7gTQAM4nBg"
+  }
+}

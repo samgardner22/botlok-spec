@@ -1,0 +1,23 @@
+{
+  "demo_bot": {
+    "key_id": "demo-bot-key-1",
+    "seed_b64url": "AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQE",
+    "public_key_b64url": "iojj3XQJ8ZX9UtstPLpdcspnCb8dlBIb83SIAbQPb1w",
+    "public_key_fingerprint": "NHUPmL1Z_PyUbaRaqr6TO-FUpLUJThxKv0KGZQXzyX4",
+    "trusted_by_default": true
+  },
+  "untrusted_demo_bot": {
+    "key_id": "untrusted-demo-key",
+    "seed_b64url": "AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI",
+    "public_key_b64url": "gTl3Dqh9F19Wo1Rmw0x-zMuNipG07jeiXfYPW4_Js5Q",
+    "public_key_fingerprint": "ajgD1fBZkCocba-8m6RykhL3yqwIY0zDrnaydSnwOCc",
+    "trusted_by_default": false
+  },
+  "demo_ledger": {
+    "key_id": "demo-ledger-key-1",
+    "seed_b64url": "AwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM",
+    "public_key_b64url": "7UkoxijRwsbq6QM4kFmVYSlZJzpcY_k2NsFGFKyHN9E",
+    "public_key_fingerprint": "ti6Gf6LzOv5i1daxZC4WIdVDMHhGsqV7iX5xCRm3Zwk",
+    "trusted_by_default": true
+  }
+}
