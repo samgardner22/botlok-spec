@@ -1,8 +1,8 @@
-# Botlok Receipt Schema v0.1 Candidate - v1.3.6 Public Candidate
+# Botlok Receipt Schema v0.1 Candidate - v1.3.8 Public Candidate
 
 Status: public release candidate for protocol review.  
 Date: 2026-06-13.
-Patch level: v1.3.6 reference-implementation-status candidate.  
+Patch level: v1.3.8 opaque-field display-consistency candidate.  
 Spec text license: CC-BY-4.0 candidate.  
 Code, examples, and test vectors: Apache-2.0 candidate.  
 Audience: protocol reviewers, grammY developers, Telegram bot implementers, and Botlok maintainers.
@@ -238,6 +238,8 @@ ledger_signature_preimage = UTF8(
 
 `receipt_hash` uses the canonical payload only. It does not include `bot_sig`, `ledger`, public share tokens, or presentation labels.
 
+`payload.receipt_id` and `ledger.ingest_ts` MUST NOT contain the `|` (U+007C) character, so the ledger signature preimage is unambiguous.
+
 The v0.1 candidate profile represents `payload.event_ts` and `ledger.ingest_ts` as strings. The frozen M0 reference currently represents those values as epoch-millisecond numbers; M1a aligns the reference implementation to the public profile.
 
 `bot_sig.key_id` and `payload.key_id` MUST match byte-for-byte. If they differ, verification MUST fail before trusted-key lookup.
@@ -308,7 +310,7 @@ A valid v0.1 `botlok:pdr` payload MUST contain the common fields in Section 8 an
 | `policy_version` | yes | Runtime-reported policy version label. |
 | `inputs_commitment` | yes | Commitment to policy inputs. |
 
-A blocked or suppressed decision MUST NOT be shown as enforced. A PDR records what policy decided; v0.1 provides no mechanism by which a verifier could confirm that any downstream action was actually prevented or performed. Full action taxonomy and PDR-to-OAR linkage rules are deferred to M1a.
+A PDR MUST NOT be displayed as evidence of enforcement based solely on `decision`, `reason_code`, `enforcement_mode`, or any other opaque runtime-string value. A PDR records a signed runtime assertion; v0.1 provides no mechanism by which a verifier can confirm that a downstream action was actually prevented or performed. Full action taxonomy and PDR-to-OAR linkage rules are deferred to M1a.
 
 ### 9.3 `botlok:oar`
 
@@ -394,7 +396,7 @@ The v0.1 action and decision fields listed in Section 9 are signed opaque runtim
 
 A PDR `decision` is a signed policy record. It is not proof of enforcement, and v0.1 defines no linkage by which enforcement could be shown, so a verifier MUST NOT infer that any downstream action was prevented or performed.
 
-An OAR `outcome` is a signed wrapper observation. If an OAR uses an outcome value that means the result is unknown or unconfirmed, a public page MUST display `action outcome unconfirmed` and MUST NOT present the action as successfully verified.
+An OAR `outcome` is a signed opaque runtime string in v0.1. A verifier or public page MUST display it as runtime-reported and MUST NOT infer success, failure, uncertainty, delivery, enforcement, or Telegram truth from the value. Any closed outcome taxonomy or special display behavior is deferred to M1a.
 
 Full `action_phase`, `outcome`, `enforcement_actor`, retry taxonomy, and PDR-to-OAR linkage rules are deferred to M1a.
 
